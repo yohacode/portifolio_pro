@@ -369,6 +369,7 @@
             width: 100%;
         }
 
+        /* ===== Mobile Menu ===== */
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
@@ -377,45 +378,90 @@
             border: none;
             cursor: pointer;
             padding: 4px;
+            z-index: 1001;
+            position: relative;
         }
         .mobile-menu-btn span {
             display: block;
             width: 28px;
-            height: 2px;
+            height: 2.5px;
             background: var(--text-white);
             border-radius: 10px;
             transition: var(--transition);
+            transform-origin: center;
         }
         .mobile-menu-btn.open span:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
         .mobile-menu-btn.open span:nth-child(2) {
             opacity: 0;
+            transform: scaleX(0);
         }
         .mobile-menu-btn.open span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
+        /* Nav links - desktop default */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        /* Mobile styles */
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: flex;
             }
+
             .nav-links {
-                display: none;
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: 0;
                 left: 0;
                 right: 0;
-                background: rgba(15, 23, 42, 0.96);
-                backdrop-filter: blur(20px);
-                padding: 32px 24px;
-                border-bottom: 1px solid var(--border-subtle);
+                bottom: 0;
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 28px;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                padding: 80px 32px 40px;
+                transform: translateY(-100%);
+                transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                z-index: 999;
+                border-bottom: none;
+                overflow-y: auto;
             }
+
             .nav-links.open {
-                display: flex;
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+
+            .nav-links .nav-link {
+                font-size: 22px;
+                font-weight: 600;
+                color: var(--text-muted);
+                padding: 8px 0;
+            }
+
+            .nav-links .nav-link:hover,
+            .nav-links .nav-link.active {
+                color: var(--text-white);
+            }
+
+            .nav-links .btn-primary {
+                font-size: 16px;
+                padding: 14px 40px;
+                margin-top: 8px;
             }
         }
 
@@ -901,6 +947,9 @@
         .delay-5 {
             transition-delay: 0.5s;
         }
+        .delay-6 {
+            transition-delay: 0.6s;
+        }
 
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
@@ -980,6 +1029,20 @@
         .skip-link:focus {
             top: 16px;
         }
+
+        /* ===== Form status ===== */
+        #form-status.success {
+            color: var(--success);
+        }
+        #form-status.error {
+            color: #EF4444;
+        }
+        #form-status.hidden {
+            display: none;
+        }
+        #form-status:not(.hidden) {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -1008,11 +1071,11 @@
                 Yoha<span class="text-gradient">Codes</span>
             </a>
 
-            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
                 <span></span><span></span><span></span>
             </button>
 
-            <nav class="nav-links flex items-center gap-8" id="nav-links" role="menubar">
+            <nav class="nav-links" id="nav-links" role="menubar">
                 <a href="#about" class="nav-link" role="menuitem">About</a>
                 <a href="#skills" class="nav-link" role="menuitem">Skills</a>
                 <a href="#experience" class="nav-link" role="menuitem">Experience</a>
@@ -1050,7 +1113,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         Hire Me
                     </a>
-                    <a href="assets/resume.pdf" class="btn-secondary" download>
+                    <a href="resume.pdf" class="btn-secondary" download>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         Download Resume
                     </a>
@@ -1196,7 +1259,6 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4" id="tech-grid">
-                <!-- Icons with labels - using emoji/symbol as placeholder for SVG icons -->
                 <div class="tech-icon reveal delay-1"><span class="icon-svg">🐘</span><span class="label">PHP</span></div>
                 <div class="tech-icon reveal delay-1"><span class="icon-svg">⚡</span><span class="label">Laravel</span></div>
                 <div class="tech-icon reveal delay-2"><span class="icon-svg">🟨</span><span class="label">JavaScript</span></div>
@@ -1444,7 +1506,6 @@
                     </a>
                 </div>
                 <div class="mt-4 text-xs text-muted text-center sm:text-left">
-                    <!-- Placeholder for latest video — replace with real API integration -->
                     <span class="inline-block px-3 py-1 rounded-full bg-accent/5 text-muted">📹 Latest: "Build a Laravel CRUD in 20 Minutes"</span>
                 </div>
             </div>
@@ -1493,7 +1554,6 @@
                             <p class="text-lg leading-relaxed">"Yohannes has a rare gift for making complex topics accessible. His teaching style is patient, clear, and always focused on real-world application. He genuinely cares about his students' success."</p>
                             <p class="font-semibold mt-4">— STEMforKids Program Lead</p>
                             <p class="text-sm text-muted">Colleague</p>
-                            <!-- Replace with real testimonial -->
                         </div>
                     </div>
                     <!-- Slide 2 -->
@@ -1503,7 +1563,6 @@
                             <p class="text-lg leading-relaxed">"Working with Yohannes on our dashboard project was a game-changer. He delivered clean, well-documented code on time and was always proactive with suggestions. A true professional."</p>
                             <p class="font-semibold mt-4">— Business Owner</p>
                             <p class="text-sm text-muted">Client</p>
-                            <!-- Replace with real testimonial -->
                         </div>
                     </div>
                     <!-- Slide 3 -->
@@ -1513,7 +1572,6 @@
                             <p class="text-lg leading-relaxed">"Yohannes helped me automate my entire reporting workflow with Excel. What used to take hours now takes minutes. His expertise and clear communication made the process seamless."</p>
                             <p class="font-semibold mt-4">— Operations Manager</p>
                             <p class="text-sm text-muted">Client</p>
-                            <!-- Replace with real testimonial -->
                         </div>
                     </div>
                 </div>
@@ -1539,31 +1597,37 @@
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
                 <div class="lg:col-span-3 reveal">
                     <form id="contact-form" novalidate aria-label="Contact form">
+                        <!-- FormSubmit endpoint – messages go to yohapa.49@gmail.com -->
+                        <input type="hidden" name="_subject" value="New Contact from YohaCodes Portfolio" />
+                        <input type="hidden" name="_captcha" value="false" />
+                        <input type="hidden" name="_template" value="table" />
+                        <!-- Redirect to a thank-you page (optional) – we handle via JS -->
+
                         <div class="space-y-5">
                             <div>
                                 <label for="name" class="block text-sm font-medium mb-1">Full Name</label>
-                                <input type="text" id="name" class="form-input" placeholder="Your name" required aria-required="true" />
+                                <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required aria-required="true" />
                                 <div class="form-error" id="name-error">Please enter your name.</div>
                             </div>
                             <div>
                                 <label for="email" class="block text-sm font-medium mb-1">Email Address</label>
-                                <input type="email" id="email" class="form-input" placeholder="you@example.com" required aria-required="true" />
+                                <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required aria-required="true" />
                                 <div class="form-error" id="email-error">Please enter a valid email address.</div>
                             </div>
                             <div>
                                 <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
-                                <input type="text" id="subject" class="form-input" placeholder="What's this about?" />
+                                <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?" />
                             </div>
                             <div>
                                 <label for="message" class="block text-sm font-medium mb-1">Message</label>
-                                <textarea id="message" rows="5" class="form-input" placeholder="Tell me about your project or question..." required aria-required="true"></textarea>
+                                <textarea id="message" name="message" rows="5" class="form-input" placeholder="Tell me about your project or question..." required aria-required="true"></textarea>
                                 <div class="form-error" id="message-error">Please enter a message.</div>
                             </div>
                             <button type="submit" class="btn-primary w-full justify-center" id="submit-btn">
                                 <span id="submit-text">Send Message</span>
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                             </button>
-                            <div id="form-status" class="text-sm font-medium text-center hidden" role="status"></div>
+                            <div id="form-status" class="text-sm font-medium hidden" role="status"></div>
                         </div>
                     </form>
                 </div>
@@ -1675,7 +1739,8 @@
             function animateCursor() {
                 cursorX += (mouseX - cursorX) * 0.12;
                 cursorY += (mouseY - cursorY) * 0.12;
-                cursor.style.transform = `translate(${cursorX - cursor.offsetWidth/2}px, ${cursorY - cursor.offsetHeight/2}px)`;
+                cursor.style.transform =
+                    `translate(${cursorX - cursor.offsetWidth/2}px, ${cursorY - cursor.offsetHeight/2}px)`;
                 requestAnimationFrame(animateCursor);
             }
             animateCursor();
@@ -1703,16 +1768,17 @@
         })();
 
         // ============================================================
-        // 3. NAVBAR
+        // 3. NAVBAR + MOBILE MENU
         // ============================================================
         (function navbar() {
             const navbar = document.getElementById('navbar');
             const btn = document.getElementById('mobile-menu-btn');
             const links = document.getElementById('nav-links');
 
+            // Scroll handler: scrolled class + active nav link
             window.addEventListener('scroll', () => {
                 navbar.classList.toggle('scrolled', window.scrollY > 60);
-                // Active nav link
+
                 const sections = document.querySelectorAll('section[id]');
                 let current = '';
                 sections.forEach(s => {
@@ -1724,19 +1790,65 @@
                 });
             });
 
-            btn.addEventListener('click', () => {
-                const open = links.classList.toggle('open');
-                btn.classList.toggle('open');
-                btn.setAttribute('aria-expanded', open);
+            // Toggle mobile menu
+            function toggleMenu(open) {
+                const isOpen = open !== undefined ? open : links.classList.contains('open');
+                if (open !== undefined) {
+                    if (open) {
+                        links.classList.add('open');
+                        btn.classList.add('open');
+                        btn.setAttribute('aria-expanded', 'true');
+                    } else {
+                        links.classList.remove('open');
+                        btn.classList.remove('open');
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                } else {
+                    const newState = !links.classList.contains('open');
+                    links.classList.toggle('open', newState);
+                    btn.classList.toggle('open', newState);
+                    btn.setAttribute('aria-expanded', newState);
+                }
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+            }
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMenu();
             });
 
-            // Close mobile nav on link click
+            // Close menu when a nav link is clicked
             links.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
-                    links.classList.remove('open');
-                    btn.classList.remove('open');
-                    btn.setAttribute('aria-expanded', 'false');
+                    if (links.classList.contains('open')) {
+                        toggleMenu(false);
+                    }
                 });
+            });
+
+            // Close menu on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && links.classList.contains('open')) {
+                    toggleMenu(false);
+                    btn.focus();
+                }
+            });
+
+            // Close menu on click outside (but not on the button itself)
+            document.addEventListener('click', (e) => {
+                if (links.classList.contains('open') &&
+                    !links.contains(e.target) &&
+                    !btn.contains(e.target)) {
+                    toggleMenu(false);
+                }
+            });
+
+            // Handle resize: close menu on desktop
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && links.classList.contains('open')) {
+                    toggleMenu(false);
+                }
             });
         })();
 
@@ -1857,7 +1969,6 @@
                 dot.addEventListener('click', () => goTo(i));
             });
 
-            // Auto-slide
             let interval = setInterval(() => goTo(current + 1), 7000);
             const slider = document.querySelector('.testimonial-slider');
             slider.addEventListener('mouseenter', () => clearInterval(interval));
@@ -1867,7 +1978,7 @@
         })();
 
         // ============================================================
-        // 9. CONTACT FORM
+        // 9. CONTACT FORM — sends to yohapa.49@gmail.com via FormSubmit
         // ============================================================
         (function contactForm() {
             const form = document.getElementById('contact-form');
@@ -1876,6 +1987,8 @@
             const message = document.getElementById('message');
             const subject = document.getElementById('subject');
             const status = document.getElementById('form-status');
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
 
             function validateField(input, errorId, condition) {
                 const err = document.getElementById(errorId);
@@ -1890,36 +2003,71 @@
                 }
             }
 
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
+                // Validate
                 const isName = validateField(name, 'name-error', name.value.trim().length > 0);
-                const isEmail = validateField(email, 'email-error', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()));
+                const isEmail = validateField(email, 'email-error', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value
+                .trim()));
                 const isMsg = validateField(message, 'message-error', message.value.trim().length > 0);
 
                 if (!isName || !isEmail || !isMsg) return;
 
-                const btn = document.getElementById('submit-btn');
-                const txt = document.getElementById('submit-text');
-                btn.disabled = true;
-                txt.textContent = 'Sending...';
-                status.classList.remove('hidden');
-                status.textContent = '✅ Your message has been sent! I\'ll get back to you soon.';
-                status.style.color = '#22C55E';
+                // Disable button, show sending state
+                submitBtn.disabled = true;
+                submitText.textContent = 'Sending...';
+                status.classList.remove('hidden', 'success', 'error');
+                status.textContent = '⏳ Sending your message...';
+                status.style.color = '#94A3B8';
 
-                // Simulate send
-                setTimeout(() => {
-                    txt.textContent = 'Send Message';
-                    btn.disabled = false;
-                    form.reset();
-                    // Optionally clear status after a few seconds
+                // Build FormData
+                const formData = new FormData(form);
+                // Ensure subject is set
+                if (!formData.get('subject') || formData.get('subject').trim() === '') {
+                    formData.set('subject', 'New Contact from YohaCodes Portfolio');
+                }
+
+                try {
+                    // Use FormSubmit.co to forward to yohapa.49@gmail.com
+                    const response = await fetch('https://formsubmit.co/ajax/yohapa.49@gmail.com', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.success !== false) {
+                        status.textContent = '✅ Your message has been sent! I\'ll get back to you soon.';
+                        status.style.color = '#22C55E';
+                        status.classList.add('success');
+                        form.reset();
+                        // Clear any error states
+                        document.querySelectorAll('.form-input.error').forEach(el => el.classList.remove('error'));
+                        document.querySelectorAll('.form-error.visible').forEach(el => el.classList.remove('visible'));
+                    } else {
+                        throw new Error(result.message || 'Failed to send message.');
+                    }
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    status.textContent = '❌ Something went wrong. Please try again or email me directly at yohapa.49@gmail.com';
+                    status.style.color = '#EF4444';
+                    status.classList.add('error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Send Message';
+                    // Auto-hide status after 8 seconds
                     setTimeout(() => {
                         status.classList.add('hidden');
-                    }, 5000);
-                }, 1800);
+                        status.classList.remove('success', 'error');
+                    }, 8000);
+                }
             });
 
-            // Real-time validation
+            // Real-time validation on blur
             [name, email, message].forEach(input => {
                 input.addEventListener('blur', () => {
                     const id = input.id + '-error';
@@ -1978,22 +2126,7 @@
         })();
 
         // ============================================================
-        // 12. KEYBOARD ACCESSIBILITY - ESC to close mobile nav
-        // ============================================================
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                const links = document.getElementById('nav-links');
-                const btn = document.getElementById('mobile-menu-btn');
-                if (links.classList.contains('open')) {
-                    links.classList.remove('open');
-                    btn.classList.remove('open');
-                    btn.setAttribute('aria-expanded', 'false');
-                }
-            }
-        });
-
-        // ============================================================
-        // 13. CONSOLE BRANDING (optional easter egg)
+        // 12. CONSOLE BRANDING
         // ============================================================
         console.log('%c Yoha Codes %c Built with ❤️ and vanilla JS ',
             'background:#3B82F6;color:#fff;padding:6px 12px;border-radius:4px 0 0 4px;font-weight:700;',
