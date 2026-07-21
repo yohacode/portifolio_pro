@@ -661,21 +661,27 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
-        /* ===== Skill Bars ===== */
-        .skill-bar-track {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 8px;
+        /* ===== Skill list (no bars) ===== */
+        .skill-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
         }
-        .skill-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            width: 0%;
-            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        .skill-list li {
+            font-size: 15px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+        }
+        .skill-list li::before {
+            content: "▹";
+            color: var(--accent);
+            margin-right: 6px;
         }
 
         /* ===== Timeline ===== */
@@ -982,6 +988,10 @@
                 height: 42px;
                 font-size: 16px;
             }
+            .skill-list li {
+                font-size: 14px;
+                padding: 2px 12px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -997,9 +1007,6 @@
             .reveal-scale {
                 opacity: 1 !important;
                 transform: none !important;
-            }
-            .skill-bar-fill {
-                width: 100% !important;
             }
         }
 
@@ -1200,12 +1207,12 @@
                     <h3 class="text-xl font-semibold flex items-center gap-3 mb-4">
                         <span class="text-2xl">⚙️</span> Backend
                     </h3>
-                    <div class="space-y-4">
-                        <div><div class="flex justify-between text-sm"><span>PHP</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Laravel</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Livewire</span><span>80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Python</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div></div>
-                    </div>
+                    <ul class="skill-list">
+                        <li>PHP</li>
+                        <li>Laravel</li>
+                        <li>Livewire</li>
+                        <li>Python</li>
+                    </ul>
                 </div>
 
                 <!-- Frontend -->
@@ -1213,11 +1220,11 @@
                     <h3 class="text-xl font-semibold flex items-center gap-3 mb-4">
                         <span class="text-2xl">🎨</span> Frontend
                     </h3>
-                    <div class="space-y-4">
-                        <div><div class="flex justify-between text-sm"><span>JavaScript</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>HTML5</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>CSS3 / Tailwind</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div></div>
-                    </div>
+                    <ul class="skill-list">
+                        <li>JavaScript</li>
+                        <li>HTML5</li>
+                        <li>CSS3 / Tailwind</li>
+                    </ul>
                 </div>
 
                 <!-- Databases & Tools -->
@@ -1225,12 +1232,12 @@
                     <h3 class="text-xl font-semibold flex items-center gap-3 mb-4">
                         <span class="text-2xl">🗄️</span> Databases &amp; Tools
                     </h3>
-                    <div class="space-y-4">
-                        <div><div class="flex justify-between text-sm"><span>SQL / MySQL</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Excel Data Analysis</span><span>80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Linux / Networking</span><span>75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Git / GitHub</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div></div>
-                    </div>
+                    <ul class="skill-list">
+                        <li>SQL / MySQL</li>
+                        <li>Excel Data Analysis</li>
+                        <li>Linux / Networking</li>
+                        <li>Git / GitHub</li>
+                    </ul>
                 </div>
 
                 <!-- Teaching & Soft Skills -->
@@ -1238,12 +1245,12 @@
                     <h3 class="text-xl font-semibold flex items-center gap-3 mb-4">
                         <span class="text-2xl">🧑‍🏫</span> Teaching &amp; Soft Skills
                     </h3>
-                    <div class="space-y-4">
-                        <div><div class="flex justify-between text-sm"><span>STEM Education</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Project-Based Learning</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Student Mentoring</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div></div>
-                        <div><div class="flex justify-between text-sm"><span>Curriculum Support</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div></div>
-                    </div>
+                    <ul class="skill-list">
+                        <li>STEM Education</li>
+                        <li>Project-Based Learning</li>
+                        <li>Student Mentoring</li>
+                        <li>Curriculum Support</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1601,7 +1608,6 @@
                         <input type="hidden" name="_subject" value="New Contact from YohaCodes Portfolio" />
                         <input type="hidden" name="_captcha" value="false" />
                         <input type="hidden" name="_template" value="table" />
-                        <!-- Redirect to a thank-you page (optional) – we handle via JS -->
 
                         <div class="space-y-5">
                             <div>
@@ -1929,23 +1935,7 @@
         })();
 
         // ============================================================
-        // 7. SKILL BARS
-        // ============================================================
-        (function skillBars() {
-            const fills = document.querySelectorAll('.skill-bar-fill');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const w = entry.target.getAttribute('data-width');
-                        if (w) entry.target.style.width = w + '%';
-                    }
-                });
-            }, { threshold: 0.3 });
-            fills.forEach(el => observer.observe(el));
-        })();
-
-        // ============================================================
-        // 8. TESTIMONIAL SLIDER
+        // 7. TESTIMONIAL SLIDER
         // ============================================================
         (function testimonial() {
             const track = document.getElementById('testimonial-track');
@@ -1978,7 +1968,7 @@
         })();
 
         // ============================================================
-        // 9. CONTACT FORM — sends to yohapa.49@gmail.com via FormSubmit
+        // 8. CONTACT FORM — sends to yohapa.49@gmail.com via FormSubmit
         // ============================================================
         (function contactForm() {
             const form = document.getElementById('contact-form');
@@ -2089,7 +2079,7 @@
         })();
 
         // ============================================================
-        // 10. BACK TO TOP & SCROLL PROGRESS
+        // 9. BACK TO TOP & SCROLL PROGRESS
         // ============================================================
         (function scrollUtils() {
             const back = document.getElementById('back-to-top');
@@ -2111,7 +2101,7 @@
         })();
 
         // ============================================================
-        // 11. SMOOTH SCROLL FOR NAV LINKS
+        // 10. SMOOTH SCROLL FOR NAV LINKS
         // ============================================================
         (function smoothScroll() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2126,7 +2116,7 @@
         })();
 
         // ============================================================
-        // 12. CONSOLE BRANDING
+        // 11. CONSOLE BRANDING
         // ============================================================
         console.log('%c Yoha Codes %c Built with ❤️ and vanilla JS ',
             'background:#3B82F6;color:#fff;padding:6px 12px;border-radius:4px 0 0 4px;font-weight:700;',
