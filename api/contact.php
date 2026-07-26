@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $message = $_POST["message"] ?? "";
 
     // Example: send email (requires external SMTP service)
-    mail("yohapa.49@gmail.com", "New Contact Form Submission",
+    mail("yoha-work@outlook.com", "New Contact Form Submission",
         "Name: $name\nEmail: $email\nMessage:\n$message");
 
     echo json_encode(["status" => "success", "message" => "Form submitted"]);
